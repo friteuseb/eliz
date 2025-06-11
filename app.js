@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+const { useState, useEffect } = React;
 
 const ABA_TOKEN_ECONOMIES_KEY = 'abaTokenEconomies';
 const ABA_CURRENT_ECONOMY_ID_KEY = 'abaCurrentEconomyId';
@@ -606,4 +606,6 @@ const ABATokenApp = () => {
   );
 };
 
-export default ABATokenApp;
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(ABATokenApp));
