@@ -1,0 +1,127 @@
+/* Styles personnalisés pour l'application ABA */
+
+/* Animation de pulsation pour les jetons */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Animation pour les modals */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Styles pour les jetons */
+.token-hover:hover {
+  animation: pulse-glow 1s infinite;
+}
+
+/* Styles pour les modals */
+.modal-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Styles pour la barre de progression */
+.progress-bar {
+  background: linear-gradient(90deg, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .token {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .emoji-selector {
+    font-size: 2rem;
+  }
+}
+
+/* Accessibility improvements */
+.drag-area:focus {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.token:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Dark mode support (for future evolution) */
+@media (prefers-color-scheme: dark) {
+  .bg-white\/90 {
+    background-color: rgba(31, 41, 55, 0.9);
+  }
+  
+  .text-gray-800 {
+    color: #f9fafb;
+  }
+  
+  .text-gray-700 {
+    color: #d1d5db;
+  }
+}
+
+/* Print styles (for documentation) */
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-dashed {
+    border-width: 3px;
+  }
+  
+  .drop-shadow-lg {
+    filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.8));
+  }
+}
