@@ -1,4 +1,4 @@
-const { useState, useRef, useEffect } = React;
+import React, { useState, useEffect } from 'react';
 
 const ABA_TOKEN_ECONOMIES_KEY = 'abaTokenEconomies';
 const ABA_CURRENT_ECONOMY_ID_KEY = 'abaCurrentEconomyId';
@@ -10,56 +10,58 @@ const TokenEconomySelectionPage = ({ tokenEconomies, setCurrentEconomyId, addTok
     navigateToApp();
   };
 
-  return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4" },
-    React.createElement('div', { className: "max-w-4xl mx-auto" },
-      React.createElement('div', { className: "text-center mb-8" },
-        React.createElement('h1', { className: "text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg" },
-          '🌟 Choisir une Économie de Jetons 🌟'
-        ),
-        React.createElement('p', { className: "text-white text-lg" },
-          'Sélectionnez une économie existante ou créez-en une nouvelle'
-        )
-      ),
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            🌟 Choisir une Économie de Jetons 🌟
+          </h1>
+          <p className="text-white text-lg">
+            Sélectionnez une économie existante ou créez-en une nouvelle
+          </p>
+        </div>
 
-      React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" },
-        // Économies existantes
-        tokenEconomies.map(economy =>
-          React.createElement('div', {
-            key: economy.id,
-            onClick: () => selectEconomy(economy.id),
-            className: "bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl cursor-pointer hover:scale-105 transition-all duration-200"
-          },
-            React.createElement('div', { className: "text-center" },
-              React.createElement('div', { className: "text-4xl mb-4" }, economy.selectedEmoji),
-              React.createElement('h3', { className: "text-xl font-bold text-gray-800 mb-2" }, economy.name),
-              React.createElement('p', { className: "text-gray-600 mb-2" }, `Objectif: ${economy.goal} jetons`),
-              React.createElement('p', { className: "text-gray-600 mb-4" }, `Gagnés: ${economy.earnedTokens}/${economy.goal}`),
-              React.createElement('div', { className: "w-full bg-gray-200 rounded-full h-2" },
-                React.createElement('div', {
-                  className: "bg-green-500 h-2 rounded-full transition-all duration-300",
-                  style: { width: `${Math.min((economy.earnedTokens / economy.goal) * 100, 100)}%` }
-                })
-              ),
-              React.createElement('p', { className: "text-sm text-gray-500 mt-2" },
-                economy.rewardActivity || 'Aucune activité définie'
-              )
-            )
-          )
-        ),
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {/* Économies existantes */}
+          {tokenEconomies.map(economy => (
+            <div
+              key={economy.id}
+              onClick={() => selectEconomy(economy.id)}
+              className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl cursor-pointer hover:scale-105 transition-all duration-200"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-4">{economy.selectedEmoji}</div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">{economy.name}</h3>
+                <p className="text-gray-600 mb-2">Objectif: {economy.goal} jetons</p>
+                <p className="text-gray-600 mb-4">Gagnés: {economy.earnedTokens}/{economy.goal}</p>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${Math.min((economy.earnedTokens / economy.goal) * 100, 100)}%` }}
+                  />
+                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  {economy.rewardActivity || 'Aucune activité définie'}
+                </p>
+              </div>
+            </div>
+          ))}
 
-        // Bouton pour ajouter une nouvelle économie
-        React.createElement('div', {
-          onClick: addTokenEconomy,
-          className: "bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-2xl cursor-pointer hover:scale-105 transition-all duration-200 border-4 border-dashed border-white/50"
-        },
-          React.createElement('div', { className: "text-center text-white h-full flex flex-col justify-center" },
-            React.createElement('div', { className: "text-6xl mb-4" }, '➕'),
-            React.createElement('h3', { className: "text-xl font-bold mb-2" }, 'Nouvelle Économie'),
-            React.createElement('p', { className: "text-sm" }, 'Créer une nouvelle économie de jetons')
-          )
-        )
-      )
-    )
+          {/* Bouton pour ajouter une nouvelle économie */}
+          <div
+            onClick={addTokenEconomy}
+            className="bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-2xl cursor-pointer hover:scale-105 transition-all duration-200 border-4 border-dashed border-white/50"
+          >
+            <div className="text-center text-white h-full flex flex-col justify-center">
+              <div className="text-6xl mb-4">➕</div>
+              <h3 className="text-xl font-bold mb-2">Nouvelle Économie</h3>
+              <p className="text-sm">Créer une nouvelle économie de jetons</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -75,15 +77,87 @@ const ABATokenApp = () => {
     { id: 8, color: '#FF69B4', label: 'Rose', inBasket: true }
   ]);
   
-  const [workArea, setWorkArea] = useState([]);
   const [draggedToken, setDraggedToken] = useState(null);
   const [dragOver, setDragOver] = useState(false);
-  
-  // Configuration de l'économie de jetons
-  const [tokenEconomyGoal, setTokenEconomyGoal] = useState(5);
-  const [earnedTokens, setEarnedTokens] = useState(0);
-  const [rewardActivity, setRewardActivity] = useState('');
-  const [selectedEmoji, setSelectedEmoji] = useState('🎮');
+
+  // State for multiple token economies
+  const [tokenEconomies, setTokenEconomies] = useState([]);
+  const [currentEconomyId, setCurrentEconomyId] = useState(null);
+  const [isLoadedFromStorage, setIsLoadedFromStorage] = useState(false);
+
+  // Page navigation state
+  const [currentPage, setCurrentPage] = useState('selection');
+
+  // Load from localStorage on initial mount
+  useEffect(() => {
+    try {
+      const storedEconomies = localStorage.getItem(ABA_TOKEN_ECONOMIES_KEY);
+      let loadedEconomies = null;
+      if (storedEconomies) {
+        loadedEconomies = JSON.parse(storedEconomies);
+      }
+
+      if (loadedEconomies && loadedEconomies.length > 0) {
+        setTokenEconomies(loadedEconomies);
+        const storedCurrentId = localStorage.getItem(ABA_CURRENT_ECONOMY_ID_KEY);
+        const validCurrentId = storedCurrentId ? String(storedCurrentId) : null;
+
+        if (validCurrentId && loadedEconomies.some(econ => String(econ.id) === validCurrentId)) {
+          setCurrentEconomyId(validCurrentId);
+        } else {
+          setCurrentEconomyId(String(loadedEconomies[0].id));
+        }
+      } else {
+        const defaultEconomyId = String(Date.now());
+        const defaultEconomy = {
+          id: defaultEconomyId,
+          name: "Ma Première Économie",
+          goal: 5,
+          earnedTokens: 0,
+          rewardActivity: '',
+          selectedEmoji: '🎮',
+          workArea: [],
+        };
+        setTokenEconomies([defaultEconomy]);
+        setCurrentEconomyId(defaultEconomyId);
+      }
+    } catch (error) {
+      console.error("Failed to load from localStorage:", error);
+      const defaultEconomyId = String(Date.now());
+      const defaultEconomy = {
+        id: defaultEconomyId,
+        name: "Ma Première Économie",
+        goal: 5,
+        earnedTokens: 0,
+        rewardActivity: '',
+        selectedEmoji: '🎮',
+        workArea: [],
+      };
+      setTokenEconomies([defaultEconomy]);
+      setCurrentEconomyId(defaultEconomyId);
+    }
+    setIsLoadedFromStorage(true);
+  }, []);
+
+  // Save tokenEconomies to localStorage
+  useEffect(() => {
+    if (isLoadedFromStorage) {
+      localStorage.setItem(ABA_TOKEN_ECONOMIES_KEY, JSON.stringify(tokenEconomies));
+    }
+  }, [tokenEconomies, isLoadedFromStorage]);
+
+  // Save currentEconomyId to localStorage
+  useEffect(() => {
+    if (isLoadedFromStorage && currentEconomyId !== null) {
+      localStorage.setItem(ABA_CURRENT_ECONOMY_ID_KEY, String(currentEconomyId));
+    }
+  }, [currentEconomyId, isLoadedFromStorage]);
+
+  // Helper to get current economy
+  const getCurrentEconomy = () => tokenEconomies.find(e => String(e.id) === String(currentEconomyId));
+  const currentEconomy = getCurrentEconomy();
+
+  // Global states
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
 
@@ -113,287 +187,423 @@ const ABATokenApp = () => {
     setDragOver(false);
     
     if (draggedToken && draggedToken.inBasket) {
-      // Déplacer le jeton du panier vers la zone de travail
-      setTokens(prev => prev.map(token => 
+      setTokens(prev => prev.map(token =>
         token.id === draggedToken.id ? { ...token, inBasket: false } : token
       ));
-      setWorkArea(prev => [...prev, draggedToken]);
       
-      // Gagner un jeton dans l'économie
-      const newEarnedTokens = earnedTokens + 1;
-      setEarnedTokens(newEarnedTokens);
-      
-      // Vérifier si l'objectif est atteint
-      if (newEarnedTokens >= tokenEconomyGoal) {
+      let shouldShowReward = false;
+      setTokenEconomies(prevEconomies => prevEconomies.map(econ => {
+        if (econ.id === currentEconomyId) {
+          const newEarnedTokens = econ.earnedTokens + 1;
+          if (newEarnedTokens >= econ.goal) {
+            shouldShowReward = true;
+          }
+          return {
+            ...econ,
+            workArea: [...econ.workArea, draggedToken],
+            earnedTokens: newEarnedTokens,
+          };
+        }
+        return econ;
+      }));
+
+      if (shouldShowReward) {
         setShowRewardModal(true);
       }
     }
   };
 
   const handleReturnToBasket = (tokenId) => {
-    const token = workArea.find(t => t.id === tokenId);
+    const currentEconomy = getCurrentEconomy();
+    if (!currentEconomy) return;
+    const token = currentEconomy.workArea.find(t => t.id === tokenId);
     if (token) {
-      setTokens(prev => prev.map(t => 
+      setTokens(prev => prev.map(t =>
         t.id === tokenId ? { ...t, inBasket: true } : t
       ));
-      setWorkArea(prev => prev.filter(t => t.id !== tokenId));
+      setTokenEconomies(prevEconomies => prevEconomies.map(econ =>
+        econ.id === currentEconomyId
+          ? { ...econ, workArea: econ.workArea.filter(t => t.id !== tokenId) }
+          : econ
+      ));
     }
   };
 
   const resetActivity = () => {
     setTokens(prev => prev.map(token => ({ ...token, inBasket: true })));
-    setWorkArea([]);
-    setEarnedTokens(0);
+    setTokenEconomies(prevEconomies => prevEconomies.map(econ =>
+      econ.id === currentEconomyId
+        ? { ...econ, workArea: [], earnedTokens: 0 }
+        : econ
+    ));
     setShowRewardModal(false);
   };
 
   const claimReward = () => {
     setShowRewardModal(false);
-    setEarnedTokens(0);
-    // Animation de célébration
+    setTokenEconomies(prevEconomies => prevEconomies.map(econ =>
+      econ.id === currentEconomyId
+        ? { ...econ, earnedTokens: 0 }
+        : econ
+    ));
     setTimeout(() => {
       alert('🎉 Bravo ! Tu as gagné ta récompense ! 🎉');
     }, 500);
   };
 
   const basketTokens = tokens.filter(token => token.inBasket);
-  const progress = Math.min((earnedTokens / tokenEconomyGoal) * 100, 100);
+  const progress = currentEconomy ? Math.min((currentEconomy.earnedTokens / currentEconomy.goal) * 100, 100) : 0;
 
-  return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4" },
-    React.createElement('div', { className: "max-w-7xl mx-auto" },
-      // Header
-      React.createElement('div', { className: "text-center mb-6" },
-        React.createElement('h1', { className: "text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg" },
-          '🌟 Application ABA - Économie de Jetons 🌟'
-        )
-      ),
+  const navigateToApp = () => setCurrentPage('app');
+  const navigateToSelection = () => setCurrentPage('selection');
 
-      // Zone "Je travaille pour"
-      React.createElement('div', { className: "bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl mb-6" },
-        React.createElement('h2', { className: "text-2xl font-bold text-gray-800 mb-4 text-center" },
-          '🎯 Je travaille pour...'
-        ),
-        React.createElement('div', { className: "flex flex-col md:flex-row items-center justify-center gap-4" },
-          React.createElement('div', { className: "flex items-center gap-4" },
-            React.createElement('div', { 
-              className: "text-6xl cursor-pointer hover:scale-110 transition-transform",
-              onClick: () => setShowConfigModal(true)
-            }, selectedEmoji),
-            React.createElement('div', { className: "text-center md:text-left" },
-              React.createElement('input', {
-                type: "text",
-                value: rewardActivity,
-                onChange: (e) => setRewardActivity(e.target.value),
-                placeholder: "Décris ton activité récompense...",
-                className: "text-lg md:text-xl font-semibold text-gray-800 bg-transparent border-b-2 border-gray-300 focus:border-blue-500 outline-none p-2 w-full md:w-80"
-              })
-            )
-          ),
-          React.createElement('button', {
-            onClick: () => setShowConfigModal(true),
-            className: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors"
-          }, '⚙️ Configurer')
-        )
-      ),
+  const addTokenEconomy = () => {
+    const newEconomyId = String(Date.now());
+    const newEconomy = {
+      id: newEconomyId,
+      name: `Nouvelle Économie ${tokenEconomies.length + 1}`,
+      goal: 5,
+      earnedTokens: 0,
+      rewardActivity: '',
+      selectedEmoji: '🎉',
+      workArea: [],
+    };
+    setTokenEconomies(prevEconomies => [...prevEconomies, newEconomy]);
+    setCurrentEconomyId(newEconomyId);
+    navigateToApp();
+  };
 
-      // Économie de jetons
-      React.createElement('div', { className: "bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl mb-6" },
-        React.createElement('h2', { className: "text-2xl font-bold text-gray-800 mb-4 text-center" },
-          '💰 Économie de Jetons'
-        ),
-        React.createElement('div', { className: "flex flex-col items-center gap-4" },
-          React.createElement('div', { className: "text-xl font-semibold text-gray-700" },
-            `${earnedTokens} / ${tokenEconomyGoal} jetons gagnés`
-          ),
-          
-          // Barre de progression
-          React.createElement('div', { className: "w-full max-w-md bg-gray-200 rounded-full h-6 overflow-hidden" },
-            React.createElement('div', { 
-              className: "h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500 ease-out flex items-center justify-end pr-2",
-              style: { width: `${progress}%` }
-            },
-              progress > 20 && React.createElement('span', { className: "text-white text-sm font-bold" }, `${Math.round(progress)}%`)
-            )
-          ),
-          
-          // Représentation visuelle des jetons
-          React.createElement('div', { className: "flex flex-wrap justify-center gap-2 max-w-md" },
-            Array.from({ length: tokenEconomyGoal }, (_, i) =>
-              React.createElement('div', {
-                key: i,
-                className: `w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                  i < earnedTokens 
-                    ? 'bg-yellow-400 border-yellow-500 text-yellow-800 scale-110' 
-                    : 'bg-gray-200 border-gray-300 text-gray-500'
-                }`
-              },
-                i < earnedTokens ? '⭐' : i + 1
-              )
-            )
-          )
-        )
-      ),
+  if (currentPage === 'selection') {
+    return (
+      <TokenEconomySelectionPage
+        tokenEconomies={tokenEconomies}
+        setCurrentEconomyId={setCurrentEconomyId}
+        addTokenEconomy={addTokenEconomy}
+        navigateToApp={navigateToApp}
+      />
+    );
+  }
 
-      React.createElement('div', { className: "grid grid-cols-1 lg:grid-cols-2 gap-6" },
-        // Panier de jetons
-        React.createElement('div', { className: "bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl" },
-          React.createElement('h2', { className: "text-xl font-bold text-gray-800 mb-4 text-center" },
-            '🧺 Panier de Jetons'
-          ),
-          React.createElement('div', { className: "grid grid-cols-2 sm:grid-cols-3 gap-3 min-h-[250px] p-4 bg-gradient-to-b from-blue-50 to-blue-100 rounded-2xl border-4 border-dashed border-blue-300" },
-            basketTokens.map(token =>
-              React.createElement('div', {
-                key: token.id,
-                draggable: true,
-                onDragStart: (e) => handleDragStart(e, token),
-                onDragEnd: handleDragEnd,
-                className: "group cursor-grab active:cursor-grabbing transform hover:scale-110 transition-all duration-200",
-                style: { backgroundColor: token.color }
-              },
-                React.createElement('div', { className: "w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg flex items-center justify-center mx-auto group-hover:shadow-xl transition-shadow duration-200" },
-                  React.createElement('span', { className: "text-white font-bold text-xs md:text-sm drop-shadow-md" },
-                    token.label
-                  )
-                )
-              )
-            ),
-            basketTokens.length === 0 && React.createElement('div', { className: "col-span-full text-center text-gray-500 text-lg py-8" },
-              'Panier vide ! 🎉'
-            )
-          )
-        ),
+  // Guard against currentEconomy being null
+  if (!currentEconomy && tokenEconomies.length > 0) {
+    if (!isLoadedFromStorage) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+          <div className="text-xl">Chargement des données...</div>
+        </div>
+      );
+    }
+    setCurrentPage('selection');
+    return (
+      <TokenEconomySelectionPage
+        tokenEconomies={tokenEconomies}
+        setCurrentEconomyId={setCurrentEconomyId}
+        addTokenEconomy={addTokenEconomy}
+        navigateToApp={navigateToApp}
+      />
+    );
+  }
 
-        // Zone de travail
-        React.createElement('div', { className: "bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl" },
-          React.createElement('h2', { className: "text-xl font-bold text-gray-800 mb-4 text-center" },
-            '🎯 Zone de Travail'
-          ),
-          React.createElement('div', {
-            onDragOver: handleDragOver,
-            onDragLeave: handleDragLeave,
-            onDrop: handleDrop,
-            className: `min-h-[250px] p-4 rounded-2xl border-4 border-dashed transition-all duration-200 ${
-              dragOver 
-                ? 'border-green-400 bg-green-50 scale-105' 
-                : 'border-gray-300 bg-gradient-to-b from-gray-50 to-gray-100'
-            }`
-          },
-            workArea.length === 0 ? 
-              React.createElement('div', { className: "flex items-center justify-center h-full text-gray-500 text-lg" },
-                React.createElement('div', { className: "text-center" },
-                  React.createElement('div', { className: "text-4xl mb-2" }, '⬇️'),
-                  'Glissez vos jetons ici !'
-                )
-              ) :
-              React.createElement('div', { className: "grid grid-cols-2 sm:grid-cols-3 gap-3" },
-                workArea.map(token =>
-                  React.createElement('div', {
-                    key: token.id,
-                    onClick: () => handleReturnToBasket(token.id),
-                    className: "group cursor-pointer transform hover:scale-110 transition-all duration-200",
-                    style: { backgroundColor: token.color }
-                  },
-                    React.createElement('div', { className: "w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg flex items-center justify-center mx-auto group-hover:shadow-xl transition-shadow duration-200 relative" },
-                      React.createElement('span', { className: "text-white font-bold text-xs md:text-sm drop-shadow-md" },
-                        token.label
-                      ),
-                      React.createElement('div', { className: "absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity" },
-                        '✕'
-                      )
-                    )
-                  )
-                )
-              )
-          )
-        )
-      ),
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center text-center mb-6">
+          <button
+            onClick={navigateToSelection}
+            className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-2 px-4 rounded-full transition-all duration-200 hover:scale-105 shadow-lg"
+          >
+            ⬅️ Changer d'économie
+          </button>
+          <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">
+            {currentEconomy?.name || 'Économie de Jetons'}
+          </h1>
+          <div style={{ width: '150px' }} />
+        </div>
 
-      // Bouton reset
-      React.createElement('div', { className: "mt-6 text-center" },
-        React.createElement('button', {
-          onClick: resetActivity,
-          className: "bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105 shadow-lg"
-        }, '🔄 Recommencer')
-      )
-    ),
+        {/* Zone "Je travaille pour" */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+            🎯 Je travaille pour...
+          </h2>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+            <div className="flex items-center gap-4">
+              <div
+                className="text-6xl cursor-pointer hover:scale-110 transition-transform"
+                onClick={() => setShowConfigModal(true)}
+              >
+                {currentEconomy?.selectedEmoji || '❓'}
+              </div>
+              <div className="text-center md:text-left">
+                <input
+                  type="text"
+                  value={currentEconomy?.rewardActivity || ''}
+                  onChange={(e) => {
+                    const newActivity = e.target.value;
+                    setTokenEconomies(prev => prev.map(econ =>
+                      econ.id === currentEconomyId ? { ...econ, rewardActivity: newActivity } : econ
+                    ));
+                  }}
+                  placeholder="Décris ton activité récompense..."
+                  className="text-lg md:text-xl font-semibold text-gray-800 bg-transparent border-b-2 border-gray-300 focus:border-blue-500 outline-none p-2 w-full md:w-80"
+                />
+              </div>
+            </div>
+            <button
+              onClick={() => setShowConfigModal(true)}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors"
+            >
+              ⚙️ Configurer
+            </button>
+          </div>
+        </div>
 
-    // Modal de configuration
-    showConfigModal && React.createElement('div', { className: "fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" },
-      React.createElement('div', { className: "bg-white rounded-3xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto" },
-        React.createElement('h3', { className: "text-2xl font-bold text-gray-800 mb-4 text-center" }, '⚙️ Configuration'),
-        
-        React.createElement('div', { className: "space-y-6" },
-          React.createElement('div', {},
-            React.createElement('label', { className: "block text-sm font-bold text-gray-700 mb-2" },
-              'Nombre de jetons pour la récompense (1-10):'
-            ),
-            React.createElement('input', {
-              type: "range",
-              min: "1",
-              max: "10",
-              value: tokenEconomyGoal,
-              onChange: (e) => setTokenEconomyGoal(parseInt(e.target.value)),
-              className: "w-full"
-            }),
-            React.createElement('div', { className: "text-center text-lg font-semibold text-blue-600 mt-2" },
-              `${tokenEconomyGoal} jetons`
-            )
-          ),
+        {/* Économie de jetons */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+            Objectif actuel : {currentEconomy?.goal || 0} jetons
+          </h2>
+          <div className="flex flex-col items-center gap-4">
+            <div className="text-xl font-semibold text-gray-700">
+              {currentEconomy?.earnedTokens || 0} / {currentEconomy?.goal || 0} jetons accumulés
+            </div>
+            
+            {/* Barre de progression */}
+            <div className="w-full max-w-md bg-gray-200 rounded-full h-6 overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500 ease-out flex items-center justify-end pr-2"
+                style={{ width: `${progress}%` }}
+              >
+                {progress > 20 && <span className="text-white text-sm font-bold">{Math.round(progress)}%</span>}
+              </div>
+            </div>
+            
+            {/* Représentation visuelle des jetons */}
+            <div className="flex flex-wrap justify-center gap-2 max-w-md">
+              {Array.from({ length: currentEconomy?.goal || 0 }, (_, i) => (
+                <div
+                  key={i}
+                  className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                    i < (currentEconomy?.earnedTokens || 0)
+                      ? 'bg-yellow-400 border-yellow-500 text-yellow-800 scale-110' 
+                      : 'bg-gray-200 border-gray-300 text-gray-500'
+                  }`}
+                >
+                  {i < (currentEconomy?.earnedTokens || 0) ? '⭐' : i + 1}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          React.createElement('div', {},
-            React.createElement('label', { className: "block text-sm font-bold text-gray-700 mb-2" },
-              'Choisir un pictogramme:'
-            ),
-            React.createElement('div', { className: "grid grid-cols-4 gap-2" },
-              availableEmojis.map(emoji =>
-                React.createElement('button', {
-                  key: emoji,
-                  onClick: () => setSelectedEmoji(emoji),
-                  className: `text-3xl p-2 rounded-lg border-2 transition-all ${
-                    selectedEmoji === emoji 
-                      ? 'border-blue-500 bg-blue-50 scale-110' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`
-                }, emoji)
-              )
-            )
-          )
-        ),
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Panier de jetons */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
+              🧺 Panier de Jetons
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 min-h-[250px] p-4 bg-gradient-to-b from-blue-50 to-blue-100 rounded-2xl border-4 border-dashed border-blue-300">
+              {basketTokens.map(token => (
+                <div
+                  key={token.id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, token)}
+                  onDragEnd={handleDragEnd}
+                  className="group cursor-grab active:cursor-grabbing transform hover:scale-110 transition-all duration-200"
+                  style={{ backgroundColor: token.color }}
+                >
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg flex items-center justify-center mx-auto group-hover:shadow-xl transition-shadow duration-200">
+                    <span className="text-white font-bold text-xs md:text-sm drop-shadow-md">
+                      {token.label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {basketTokens.length === 0 && (
+                <div className="col-span-full text-center text-gray-500 text-lg py-8">
+                  Panier vide ! 🎉
+                </div>
+              )}
+            </div>
+          </div>
 
-        React.createElement('div', { className: "flex gap-3 mt-6" },
-          React.createElement('button', {
-            onClick: () => setShowConfigModal(false),
-            className: "flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors"
-          }, 'Fermer'),
-          React.createElement('button', {
-            onClick: () => {
-              setShowConfigModal(false);
-              setEarnedTokens(0);
-            },
-            className: "flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors"
-          }, 'Appliquer')
-        )
-      )
-    ),
+          {/* Zone de travail */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl">
+            <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
+              🎯 Zone de Travail
+            </h2>
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`min-h-[250px] p-4 rounded-2xl border-4 border-dashed transition-all duration-200 ${
+                dragOver 
+                  ? 'border-green-400 bg-green-50 scale-105' 
+                  : 'border-gray-300 bg-gradient-to-b from-gray-50 to-gray-100'
+              }`}
+            >
+              {(currentEconomy?.workArea || []).length === 0 ? (
+                <div className="flex items-center justify-center h-full text-gray-500 text-lg">
+                  <div className="text-center">
+                    <div className="text-4xl mb-2">⬇️</div>
+                    Glissez vos jetons ici !
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {(currentEconomy?.workArea || []).map(token => (
+                    <div
+                      key={token.id}
+                      onClick={() => handleReturnToBasket(token.id)}
+                      className="group cursor-pointer transform hover:scale-110 transition-all duration-200"
+                      style={{ backgroundColor: token.color }}
+                    >
+                      <div className="w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg flex items-center justify-center mx-auto group-hover:shadow-xl transition-shadow duration-200 relative">
+                        <span className="text-white font-bold text-xs md:text-sm drop-shadow-md">
+                          {token.label}
+                        </span>
+                        <div className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                          ✕
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
-    // Modal de récompense
-    showRewardModal && React.createElement('div', { className: "fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" },
-      React.createElement('div', { className: "bg-white rounded-3xl p-8 max-w-md w-full text-center animate-bounce" },
-        React.createElement('div', { className: "text-6xl mb-4" }, '🎉'),
-        React.createElement('h3', { className: "text-3xl font-bold text-green-600 mb-4" }, 'Félicitations !'),
-        React.createElement('p', { className: "text-lg text-gray-700 mb-2" }, `Tu as gagné ${tokenEconomyGoal} jetons !`),
-        React.createElement('div', { className: "text-4xl my-4" }, selectedEmoji),
-        React.createElement('p', { className: "text-xl font-semibold text-blue-600 mb-6" },
-          rewardActivity || "Ta récompense t'attend !"
-        ),
-        React.createElement('button', {
-          onClick: claimReward,
-          className: "bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors text-lg"
-        }, '🏆 Récupérer ma récompense !')
-      )
-    )
+        {/* Bouton reset */}
+        <div className="mt-6 text-center">
+          <button
+            onClick={resetActivity}
+            className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105 shadow-lg"
+          >
+            🔄 Recommencer
+          </button>
+        </div>
+      </div>
+
+      {/* Modal de configuration */}
+      {showConfigModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">⚙️ Configuration de l'Économie</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  Nom de l'économie:
+                </label>
+                <input
+                  type="text"
+                  value={currentEconomy?.name || ''}
+                  onChange={(e) => {
+                    const newName = e.target.value;
+                    setTokenEconomies(prev => prev.map(econ =>
+                      econ.id === currentEconomyId ? { ...econ, name: newName } : econ
+                    ));
+                  }}
+                  className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  Nombre de jetons pour la récompense (1-10):
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={currentEconomy?.goal || 0}
+                  onChange={(e) => {
+                    const newGoal = parseInt(e.target.value);
+                    setTokenEconomies(prev => prev.map(econ =>
+                      econ.id === currentEconomyId ? { ...econ, goal: newGoal } : econ
+                    ));
+                  }}
+                  className="w-full"
+                />
+                <div className="text-center text-lg font-semibold text-blue-600 mt-2">
+                  {currentEconomy?.goal || 0} jetons
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  Choisir un pictogramme:
+                </label>
+                <div className="grid grid-cols-4 gap-2">
+                  {availableEmojis.map(emoji => (
+                    <button
+                      key={emoji}
+                      onClick={() => {
+                        setTokenEconomies(prev => prev.map(econ =>
+                          econ.id === currentEconomyId ? { ...econ, selectedEmoji: emoji } : econ
+                        ));
+                      }}
+                      className={`text-3xl p-2 rounded-lg border-2 transition-all ${
+                        (currentEconomy?.selectedEmoji || '❓') === emoji
+                          ? 'border-blue-500 bg-blue-50 scale-110' 
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-8">
+              <button
+                onClick={() => setShowConfigModal(false)}
+                className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors"
+              >
+                Fermer
+              </button>
+              <button
+                onClick={() => {
+                  setTokenEconomies(prevEconomies => prevEconomies.map(econ =>
+                    String(econ.id) === String(currentEconomyId)
+                      ? { ...econ, earnedTokens: 0 }
+                      : econ
+                  ));
+                  setShowConfigModal(false);
+                }}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors"
+              >
+                Appliquer et Réinitialiser Jetons
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de récompense */}
+      {showRewardModal && currentEconomy && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center animate-bounce">
+            <div className="text-6xl mb-4">🎉</div>
+            <h3 className="text-3xl font-bold text-green-600 mb-4">Félicitations !</h3>
+            <p className="text-lg text-gray-700 mb-2">Tu as gagné {currentEconomy.goal} jetons !</p>
+            <div className="text-4xl my-4">{currentEconomy.selectedEmoji}</div>
+            <p className="text-xl font-semibold text-blue-600 mb-6">
+              {currentEconomy.rewardActivity || "Ta récompense t'attend !"}
+            </p>
+            <button
+              onClick={claimReward}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors text-lg"
+            >
+              🏆 Récupérer ma récompense !
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-// Rendu de l'application
-ReactDOM.render(React.createElement(ABATokenApp), document.getElementById('root'));
+export default ABATokenApp;
