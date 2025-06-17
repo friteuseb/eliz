@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application ABA - Économie de Jetons</title>
+    <title>SPA Demo</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -11,6 +11,47 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>SPA Demo</h1>
+        <nav>
+            <ul>
+                <li><a href="#profil">Profil</a></li>
+                <li><a href="#sequentiel">Séquentiel</a></li>
+                <li><a href="#economiseurs">Économiseurs de Jetons</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app-root">
+        <section id="child-profile-view">
+            <h2>Profil Enfant</h2>
+            <div>
+                <p><strong>Nom:</strong> <span id="child-name-display"></span></p>
+                <p><strong>Code Unique:</strong> <span id="child-code-display"></span></p>
+            </div>
+
+            <h3>Feed-back collaboratif</h3>
+            <div id="feedback-list-container">
+                <ul id="feedback-list">
+                    <!-- Feedback items will be listed here -->
+                </ul>
+            </div>
+            <form id="feedback-form">
+                <label for="feedback-text">Ajouter un retour:</label>
+                <textarea id="feedback-text" name="feedback-text" rows="3"></textarea>
+                <button type="submit">Ajouter et Signer</button>
+            </form>
+
+            <h3>Recherche rapide d'enfant</h3>
+            <form id="child-search-form">
+                <label for="search-child-code">Code Unique Enfant:</label>
+                <input type="text" id="search-child-code" name="search-child-code">
+                <button type="submit">Rechercher</button>
+            </form>
+        </section>
+        <!-- Other views will be hidden/shown by JS -->
+    </main>
+
     <div id="root"></div>
     <script type="text/babel" src="app.js"></script>
 </body>

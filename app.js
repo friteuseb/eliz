@@ -1,3 +1,117 @@
+console.log("app.js loaded");
+
+// Future SPA routing logic will go here
+// For example, using a library like React Router
+// or a simple custom router.
+
+// Placeholder for route handling functions:
+// function handleNavigation(path) {
+//   console.log("Navigating to:", path);
+//   // Logic to render different components based on path
+// }
+
+// Vanilla JS for Child Profile Page - Placed before React logic
+document.addEventListener('DOMContentLoaded', function() {
+    const mockChildProfile = {
+        id: '1',
+        name: 'Alex Dupont',
+        uniqueCode: 'XYZ123',
+        feedbackEntries: [
+            { intervenant: 'Prof. A', text: 'Bonne participation en classe.', timestamp: new Date().toLocaleDateString() },
+            { intervenant: 'Dr. B', text: 'Progrès notables en séance.', timestamp: new Date().toLocaleDateString() }
+        ]
+    };
+    const mockChildProfile2 = {
+        id: '2',
+        name: 'Samira Petit',
+        uniqueCode: 'ABC789',
+        feedbackEntries: [
+            { intervenant: 'Educ. C', text: 'A bien suivi la routine du matin.', timestamp: new Date().toLocaleDateString() }
+        ]
+    };
+    const mockProfiles = [mockChildProfile, mockChildProfile2];
+    let currentProfile = mockChildProfile; // Profile to display by default
+
+    // DOM Elements
+    const childNameDisplay = document.getElementById('child-name-display');
+    const childCodeDisplay = document.getElementById('child-code-display');
+    const feedbackList = document.getElementById('feedback-list');
+    const feedbackForm = document.getElementById('feedback-form');
+    const feedbackTextarea = document.getElementById('feedback-text');
+    const childSearchForm = document.getElementById('child-search-form');
+    const searchChildCodeInput = document.getElementById('search-child-code');
+    // It's good to have a place for search error messages
+    const searchFormContainer = childSearchForm.parentElement; // Assuming form is within a section or div
+    let searchErrorMessageP = document.getElementById('search-error-message');
+    if (!searchErrorMessageP) {
+        searchErrorMessageP = document.createElement('p');
+        searchErrorMessageP.id = 'search-error-message';
+        searchErrorMessageP.style.color = 'red';
+        // Insert after the search form
+        childSearchForm.parentNode.insertBefore(searchErrorMessageP, childSearchForm.nextSibling);
+    }
+
+
+    function renderFeedbackList(entries) {
+        if (!feedbackList) return;
+        feedbackList.innerHTML = ''; // Clear existing items
+        entries.forEach(entry => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<strong>${entry.intervenant}:</strong> ${entry.text} <em>(${entry.timestamp})</em>`;
+            feedbackList.appendChild(listItem);
+        });
+    }
+
+    function displayChildProfile(profile) {
+        if (!profile) return;
+        if (childNameDisplay) childNameDisplay.textContent = profile.name;
+        if (childCodeDisplay) childCodeDisplay.textContent = profile.uniqueCode;
+        if (feedbackList) renderFeedbackList(profile.feedbackEntries);
+    }
+
+    // Event Listener for Feedback Form
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const text = feedbackTextarea.value.trim();
+            if (text && currentProfile) {
+                const newEntry = {
+                    intervenant: 'Utilisateur Actuel (mock)', // Placeholder
+                    text: text,
+                    timestamp: new Date().toLocaleDateString()
+                };
+                currentProfile.feedbackEntries.push(newEntry);
+                renderFeedbackList(currentProfile.feedbackEntries);
+                feedbackTextarea.value = ''; // Clear textarea
+            }
+        });
+    }
+
+    // Event Listener for Child Search Form
+    if (childSearchForm) {
+        childSearchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchCode = searchChildCodeInput.value.trim().toUpperCase();
+            const foundProfile = mockProfiles.find(profile => profile.uniqueCode.toUpperCase() === searchCode);
+
+            if (foundProfile) {
+                currentProfile = foundProfile;
+                displayChildProfile(currentProfile);
+                searchErrorMessageP.textContent = ''; // Clear error message
+                searchChildCodeInput.value = ''; // Clear search input
+            } else {
+                searchErrorMessageP.textContent = 'Aucun profil trouvé avec ce code.';
+            }
+        });
+    }
+
+    // Initial display
+    // Ensure elements exist before trying to display profile (important if this script runs before full DOM load)
+    if (childNameDisplay && childCodeDisplay && feedbackList) {
+         displayChildProfile(currentProfile);
+    }
+});
+
 const { useState, useEffect } = React;
 
 const ABA_TOKEN_ECONOMIES_KEY = 'abaTokenEconomies';
