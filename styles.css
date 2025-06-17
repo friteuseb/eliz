@@ -1,3 +1,57 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 1rem;
+    min-height: 70vh; /* Ensure main content takes up significant space */
+}
+
+#app-root {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
 /* Styles personnalisés pour l'application ABA */
 
 /* Animation de pulsation pour les jetons */
@@ -124,4 +178,102 @@
   .drop-shadow-lg {
     filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.8));
   }
+}
+
+/* Styles for Child Profile Page */
+#child-profile-view {
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+#child-profile-view h2,
+#child-profile-view h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    color: #333;
+}
+
+#child-profile-view h2 {
+    font-size: 1.8em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+#child-profile-view h3 {
+    font-size: 1.4em;
+    color: #555;
+}
+
+#child-profile-view p {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+#child-profile-view #child-name-display,
+#child-profile-view #child-code-display {
+    font-weight: bold;
+    color: #007bff; /* A slightly different color for emphasis */
+}
+
+/* Collaborative Feedback Area */
+#feedback-list-container {
+    margin-bottom: 1rem;
+}
+
+#feedback-list {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0; /* Remove default padding */
+    margin-bottom: 1rem;
+}
+
+#feedback-list li { /* Placeholder styling for future list items */
+    padding: 0.75rem;
+    border: 1px solid #eee;
+    margin-bottom: 0.5rem;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+#feedback-form label,
+#child-search-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    color: #555;
+}
+
+#feedback-form textarea,
+#child-search-form input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+#feedback-form button,
+#child-search-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#feedback-form button:hover,
+#child-search-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Quick Search Area */
+#child-search-form {
+    margin-top: 1rem;
 }
