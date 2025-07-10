@@ -1,0 +1,74 @@
+{
+    "name": "typo3/cms-base-distribution",
+    "description": "TYPO3 CMS Base Distribution",
+    "license": "GPL-2.0-or-later",
+    "type": "project",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "platform": {
+            "php": "8.1.1"
+        },
+        "sort-packages": true
+    },
+    "require": {
+        "cywolf/apidaetourisme": "@dev",
+        "cywolf/nlp-tools": "dev-main as 1.2.0",
+        "cywolf/page_link_insights": "dev-main",
+        "google/cloud-language": "^0.28.5",
+        "guzzlehttp/guzzle": "^7.9",
+        "internetgalerie/ig-slug": "^1.1",
+        "talan-hdf/semantic-suggestion": "*",
+        "typo3/cms-adminpanel": "^12.4.19",
+        "typo3/cms-backend": "^12.4.0",
+        "typo3/cms-belog": "^12.4.0",
+        "typo3/cms-beuser": "^12.4.0",
+        "typo3/cms-core": "^12.4.0",
+        "typo3/cms-dashboard": "^12.0",
+        "typo3/cms-extbase": "^12.4.0",
+        "typo3/cms-extensionmanager": "^12.4.0",
+        "typo3/cms-felogin": "^12.4.0",
+        "typo3/cms-filelist": "^12.4.0",
+        "typo3/cms-fluid": "^12.4.0",
+        "typo3/cms-fluid-styled-content": "^12.4.0",
+        "typo3/cms-form": "^12.4.0",
+        "typo3/cms-frontend": "^12.4.0",
+        "typo3/cms-impexp": "^12.4.0",
+        "typo3/cms-info": "^12.4.0",
+        "typo3/cms-install": "^12.4.0",
+        "typo3/cms-introduction": "^4.6",
+        "typo3/cms-reactions": "^12.4.0",
+        "typo3/cms-recycler": "^12.4",
+        "typo3/cms-rte-ckeditor": "^12.4.0",
+        "typo3/cms-scheduler": "^12.4",
+        "typo3/cms-seo": "^12.4.0",
+        "typo3/cms-setup": "^12.4.0",
+        "typo3/cms-sys-note": "^12.4.0",
+        "typo3/cms-t3editor": "^12.4.0",
+        "typo3/cms-tstemplate": "^12.4.0",
+        "typo3/cms-viewpage": "^12.4.0",
+        "typo3/cms-webhooks": "^12.4.0",
+        "wamania/php-stemmer": "^3.0",
+        "yoast-seo-for-typo3/yoast_seo": "^11.0"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/*"
+        }
+    ],
+
+    "extra": {
+        "typo3/cms": {
+            "web-dir": "public"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "typo3/testing-framework": "^8.2"
+    }
+}

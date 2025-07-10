@@ -1,0 +1,2 @@
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['features']['security.backend.addXSSProtectionHeader'] = false;
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['features']['security.backend.addContentTypeOptionsHeader'] = false;

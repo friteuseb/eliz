@@ -1,0 +1,18 @@
+Page Analysis Service (TalanHdf\SemanticSuggestion\Tests\Unit\Service\PageAnalysisService)
+ [ ] Get weighted words returns correct weights
+ [ ] Calculate similarity returns expected values for similar pages
+ [x] Calculate similarity returns low values for dissimilar pages
+ [x] Calculate similarity handles empty fields
+ [ ] Recency weight affects final similarity
+ [x] Similarity calculation with missing fields
+ [x] Similarity calculation with different field weights
+ [x] Similarity calculation with keywords
+ [x] Find common keywords returns correct results
+ [x] Determine relevance returns correct category
+ [x] Calculate recency boost returns expected values
+ [x] Calculate field similarity handles empty fields
+ [x] Analyze pages should handle empty input
+ [ ] Prepare page data handles all configured fields
+ [x] Similarity calculation with large content difference
+ [x] Similarity calculation with identical content
+

@@ -1,0 +1,41 @@
+
+imports:
+    # Ajoutez cette ligne pour importer la configuration de votre extension
+    - { resource: "EXT:cywolf_apidaetourisme/Configuration/Yaml/RouteEnhancers.yaml" }
+base: /
+errorHandling:
+  -
+    errorCode: 404
+    errorHandler: Page
+    errorContentSource: 't3://page?uid=5'
+languages:
+  -
+    title: Français
+    enabled: true
+    languageId: 0
+    base: /
+    typo3Language: default
+    locale: fr_FR.UTF-8
+    iso-639-1: fr
+    navigationTitle: Français
+    hreflang: fr-FR
+    direction: ''
+    flag: fr
+    websiteTitle: ''
+  -
+    title: German
+    enabled: true
+    languageId: 1
+    base: /de/
+    typo3Language: de
+    locale: de_DE.UTF-8
+    iso-639-1: de
+    navigationTitle: Deutsch
+    hreflang: de-DE
+    direction: ''
+    fallbackType: fallback
+    fallbacks: '1,0'
+    flag: de
+rootPageId: 1
+websiteTitle: 'TYPO3 Introduction Package'
+
